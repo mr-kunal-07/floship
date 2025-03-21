@@ -2,11 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 const images = [
-    "/Hero/del1.jpg",
+    "/Hero/del.jpg",
     "/Hero/Solar1.jpg",
+    "/Hero/del3.jpg",
     "/Hero/b2b.jpg",
+    "/Hero/del1.jpg",
     "/Hero/Solar.jpg",
-    // "/Hero/EV.jpg",
 
 ];
 
