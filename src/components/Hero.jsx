@@ -16,7 +16,7 @@ const Hero = () => {
     useEffect(() => {
         const videoTimeout = setTimeout(() => {
             setShowVideo(false);
-        }, 5000);
+        }, 5000); // Keep 5s but smoothen transition
         return () => clearTimeout(videoTimeout);
     }, []);
 
@@ -24,7 +24,7 @@ const Hero = () => {
         if (!showVideo) {
             const interval = setInterval(() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-            }, 4000); // Increased timing for smoother transition
+            }, 5000); // Increased for smoother transition
             return () => clearInterval(interval);
         }
     }, [showVideo]);
@@ -36,7 +36,7 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
         >
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
                 {showVideo ? (
                     <>
                         <motion.video
@@ -48,14 +48,14 @@ const Hero = () => {
                             className="absolute mt-[-20vh] w-full h-full object-cover"
                             initial={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 1, ease: "easeInOut" }}
+                            transition={{ duration: 1.5, ease: "easeInOut" }} // Longer fade-out
                         />
 
                         <motion.div
                             className="absolute inset-0 bg-black bg-opacity-50 mt-[-20vh] w-full h-full"
                             initial={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
+                            transition={{ duration: 1.5, ease: "easeInOut" }}
                         />
 
                         <motion.div
@@ -63,7 +63,7 @@ const Hero = () => {
                             className="absolute inset-0 flex flex-col items-center justify-center text-center text-white mt-[-10vh]"
                             initial={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 1, ease: "easeInOut" }}
+                            transition={{ duration: 1.5, ease: "easeInOut" }}
                         >
                             <h3 className="text-orange-500 text-base md:text-lg font-semibold">
                                 Welcome To Floship
@@ -93,16 +93,18 @@ const Hero = () => {
                         </motion.div>
                     </>
                 ) : (
-                    images.map((image, index) => (
+                    <motion.div className="absolute w-full h-full">
                         <motion.img
-                            key={index}
-                            src={image}
+                            key={currentIndex}
+                            src={images[currentIndex]}
                             alt="Slide"
-                            className="absolute opacity-100 transition-opacity duration-1000"
-                            animate={{ opacity: currentIndex === index ? 1 : 0 }}
-                            transition={{ duration: 1.5, ease: "easeInOut" }}
+                                className="absolute opacity-100 transition-opacity duration-1000"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 1.8, ease: "easeInOut" }} // Smoother fade-in
                         />
-                    ))
+                    </motion.div>
                 )}
             </AnimatePresence>
         </motion.div>
