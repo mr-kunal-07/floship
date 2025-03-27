@@ -24,7 +24,7 @@ const Hero = () => {
         if (!showVideo) {
             const interval = setInterval(() => {
                 setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-            }, 2900);
+            }, 4000); // Increased timing for smoother transition
             return () => clearInterval(interval);
         }
     }, [showVideo]);
@@ -39,28 +39,25 @@ const Hero = () => {
             <AnimatePresence>
                 {showVideo ? (
                     <>
-                        {/* Video Section (Fully Responsive) */}
                         <motion.video
                             key="video"
                             src="/Hero/bg.mp4"
                             autoPlay
                             muted
                             playsInline
-                            className="absolute  mt-[-20vh] w-full h-full object-cover"
+                            className="absolute mt-[-20vh] w-full h-full object-cover"
                             initial={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 1, ease: "easeInOut" }}
                         />
 
-                        {/* Black Transparent Overlay */}
                         <motion.div
                             className="absolute inset-0 bg-black bg-opacity-50 mt-[-20vh] w-full h-full"
                             initial={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 1, ease: "easeInOut" }}
+                            transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
                         />
 
-                        {/* Responsive Text Section */}
                         <motion.div
                             key="text"
                             className="absolute inset-0 flex flex-col items-center justify-center text-center text-white mt-[-10vh]"
@@ -68,7 +65,9 @@ const Hero = () => {
                             exit={{ opacity: 0 }}
                             transition={{ duration: 1, ease: "easeInOut" }}
                         >
-                            <h3 className="text-orange-500 text-base md:text-lg font-semibold">Welcome To Floship</h3>
+                            <h3 className="text-orange-500 text-base md:text-lg font-semibold">
+                                Welcome To Floship
+                            </h3>
                             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white">
                                 India's No.1 Solar Franchise Provider
                             </h1>
@@ -77,7 +76,6 @@ const Hero = () => {
                                 helping businesses expand with affordable and sustainable energy.
                             </p>
 
-                            {/* Buttons */}
                             <div className="mt-6 flex flex-wrap justify-center gap-4">
                                 <Link
                                     to="/about"
@@ -95,16 +93,16 @@ const Hero = () => {
                         </motion.div>
                     </>
                 ) : (
-                    <motion.img
-                        key={currentIndex}
-                        src={images[currentIndex]}
-                        alt="Slide"
+                    images.map((image, index) => (
+                        <motion.img
+                            key={index}
+                            src={image}
+                            alt="Slide"
                             className="absolute opacity-100 transition-opacity duration-1000"
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -50 }}
-                        transition={{ duration: 1, ease: "easeInOut" }}
-                    />
+                            animate={{ opacity: currentIndex === index ? 1 : 0 }}
+                            transition={{ duration: 1.5, ease: "easeInOut" }}
+                        />
+                    ))
                 )}
             </AnimatePresence>
         </motion.div>
