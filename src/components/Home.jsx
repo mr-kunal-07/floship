@@ -6,7 +6,6 @@ import About2 from "./About2";
 import Services2 from "./Services2";
 import Partners from "./Partners";
 import Hero from "./Hero";
-import FloshipPromo from "./FloshipPromo";
 
 
 const Home = () => {
