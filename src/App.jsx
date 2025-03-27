@@ -18,6 +18,7 @@ import CourierBooking from "./components/Services/CourierBooking";
 import About2 from "./components/About2";
 import WhatsAppButton from "./components/WhatsAppButton";
 import CursorDot from "./components/CursorDot";  
+import Franchise from "./components/Franchise";
 
 const App = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -37,6 +38,7 @@ const App = () => {
     { path: "/services/bill-payments", component: <UtilityBillPayments /> },
     { path: "/services/banking", component: <BankingServices /> },
     { path: "/services/courier-booking", component: <CourierBooking /> },
+    { path: "/franchise", component: <Franchise /> },
   ];
 
   return (

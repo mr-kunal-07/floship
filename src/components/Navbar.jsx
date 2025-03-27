@@ -87,6 +87,11 @@ const Navbar = () => {
                         </li>
 
                         <li>
+                            <Link to="/franchise" className={`font-bold ${isActive("/contact") ? "text-[#fb6534]" : "text-gray-700"} hover:text-[#fb6534] transition-colors`}>
+                                FRANCHISE
+                            </Link>
+                        </li>
+                        <li>
                             <Link to="/contact" className={`font-bold ${isActive("/contact") ? "text-[#fb6534]" : "text-gray-700"} hover:text-[#fb6534] transition-colors`}>
                                 CONTACT US
                             </Link>
