@@ -17,6 +17,7 @@ import BankingServices from "./components/Services/BankingServices";
 import CourierBooking from "./components/Services/CourierBooking";
 import About2 from "./components/About2";
 import WhatsAppButton from "./components/WhatsAppButton";
+import CursorDot from "./components/CursorDot";  
 
 const App = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -40,7 +41,10 @@ const App = () => {
 
   return (
     
-     <>
+    <>
+      {/* Cursor Dot - Always on top */}
+      <CursorDot />
+
       {/* Navbar with mobile menu state */}
       <Navbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />
 
@@ -48,19 +52,18 @@ const App = () => {
       <main className="relative">
         <ScrollToTop />
         <Routes>
-          {/* 🔹 Dynamic route mapping using `.map()` */}
           {routes.map((route, index) => (
             <Route key={index} path={route.path} element={route.component} />
           ))}
         </Routes>
       </main>
 
-      {/* ✅ WhatsApp Button (visible on all pages) */}
+      {/* WhatsApp Button */}
       <WhatsAppButton />
 
       {/* Footer */}
       <Footer />
-     </>
+    </>
    
   );
 };
