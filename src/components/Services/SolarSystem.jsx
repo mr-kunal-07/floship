@@ -13,6 +13,49 @@ const installationImages = [
     "/uploads/solar4.jpg",
 ];
 
+const solarSolutions = [
+    {
+        icon: "🌞",
+        title: "Solar On Grid",
+        description: "An on-grid solar electric system generates electricity through solar panels and routes it to the main utility grid.",
+    },
+    {
+        icon: "🔋",
+        title: "Solar Off Grid",
+        description: "Off-grid is an alternative way to use the electricity through the battery.",
+    },
+    {
+        icon: "⚡",
+        title: "Solar Hybrid",
+        description: "A hybrid solar system is a combination of grid-connected solar system with an option to connect batteries.",
+    },
+    {
+        icon: "🚦",
+        title: "Solar Street Light",
+        description: "The solar energy is stored in batteries and used to power an automation street light control system.",
+    },
+    {
+        icon: "💡",
+        title: "Solar Home Light",
+        description: "Portable light fixtures composed of LED lamps, photovoltaic solar panels, and rechargeable batteries.",
+    },
+    {
+        icon: "🚰",
+        title: "Solar Water Pump",
+        description: "A solar water pump system is essentially an electrical system powered by one or several panels.",
+    },
+    {
+        icon: "🔥",
+        title: "Solar Water Heater",
+        description: "A solar water heater utilizes sunlight to heat water for various purposes, typically domestic hot water supply.",
+    },
+    {
+        icon: "🔌",
+        title: "EV Charger",
+        description: "An Electric Vehicle (EV) charger is a device used to charge the battery of an electric vehicle.",
+    },
+];
+
 const fadeIn = {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
@@ -21,7 +64,6 @@ const fadeIn = {
 const SolarSystem = () => {
     const [selectedImage, setSelectedImage] = useState(null);
 
-    // Close modal when pressing ESC key
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === "Escape") setSelectedImage(null);
@@ -111,19 +153,34 @@ const SolarSystem = () => {
                 )}
             </AnimatePresence>
 
-            {/* Section 3 - CTA */}
-            <motion.div className="text-center mt-12" variants={fadeIn}>
-                <h2 className="text-2xl font-bold text-gray-800">
-                    Go Green with Solar Energy!
-                </h2>
-                <p className="text-gray-700 mt-2">
-                    Contact us to explore solar solutions customized to your needs.
+            {/* Section 3 - Solar Solutions Grid */}
+            <motion.div className="mt-16" variants={fadeIn}>
+                <h2 className="text-3xl font-bold text-gray-800 text-center">Our Solar Solutions</h2>
+                <p className="text-gray-700 text-center mt-2">
+                    Explore our range of solar-powered solutions for homes and businesses.
                 </p>
-                <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, delay: 0.2 }}>
-                    <Link to="/contact" className="mt-4 inline-block bg-[#fb6534] text-white font-bold px-6 py-3 rounded-lg hover:opacity-90 transition">
-                        Get a Quote
-                    </Link>
-                </motion.div>
+
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    {solarSolutions.map((solution, index) => (
+                        <div key={index} className="p-6 border rounded-lg shadow-lg bg-white text-center">
+                            <div className="text-4xl">{solution.icon}</div>
+                            <h3 className="text-xl font-bold text-gray-800 mt-4">{solution.title}</h3>
+                            <p className="text-gray-600 mt-2">{solution.description}</p>
+                            <Link to="/services" className="text-[#fb6534] font-bold mt-4 inline-block">
+                                Learn More →
+                            </Link>
+                        </div>
+                    ))}
+                </div>
+            </motion.div>
+
+            {/* Section 4 - CTA */}
+            <motion.div className="text-center mt-12" variants={fadeIn}>
+                <h2 className="text-2xl font-bold text-gray-800">Go Green with Solar Energy!</h2>
+                <p className="text-gray-700 mt-2">Contact us to explore solar solutions customized to your needs.</p>
+                <Link to="/contact" className="mt-4 inline-block bg-[#fb6534] text-white font-bold px-6 py-3 rounded-lg hover:opacity-90 transition">
+                    Get a Quote
+                </Link>
             </motion.div>
         </motion.div>
     );
