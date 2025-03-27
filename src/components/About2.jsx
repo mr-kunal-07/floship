@@ -12,7 +12,7 @@ const About2 = () => {
 
     return (
         <motion.section
-            className="bg-white py-16 px-6 md:px-20"
+            className="bg-white mt-[-50px] px-6 md:px-20"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
@@ -36,7 +36,7 @@ const About2 = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.8, delay: 0.5 }}
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold text-orange-500 uppercase">
+                    <h2 className="text-3xl mt-[-100px] md:text-5xl font-bold text-orange-500 uppercase">
                         Welcome to Floship Ecom Services
                     </h2>
                     <p className="mt-4 text-gray-700 leading-relaxed">

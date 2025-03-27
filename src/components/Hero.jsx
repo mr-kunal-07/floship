@@ -98,7 +98,7 @@ const Hero = () => {
                             key={currentIndex}
                             src={images[currentIndex]}
                             alt="Slide"
-                                className="absolute opacity-100 transition-opacity duration-1000"
+                            className="absolute opacity-100 transition-opacity duration-1000"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
