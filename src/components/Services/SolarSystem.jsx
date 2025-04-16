@@ -7,6 +7,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 
 const installationImages = [
+<<<<<<< HEAD
     "/uploads/solar2.jpg",
     "/uploads/solar3.jpg",
     "/uploads/solar4.jpg",
@@ -29,6 +30,12 @@ const installationImages = [
     "/uploads/1/17.jpg",
     "/uploads/1/18.jpg",
     "/uploads/1/19.jpg",
+=======
+    "/uploads/solar1.jpg",
+    "/uploads/solar2.jpg",
+    "/uploads/solar3.jpg",
+    "/uploads/solar4.jpg",
+>>>>>>> b48c8b4e29c78b64c6c5d7dacbee4e0308b8f586
 ];
 
 const solarSolutions = [
