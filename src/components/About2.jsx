@@ -1,6 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaUsers, FaLightbulb, FaHandshake, FaLeaf, FaShieldAlt, FaRocket } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const About2 = () => {
@@ -12,7 +11,7 @@ const About2 = () => {
 
     return (
         <motion.section
-            className="bg-white mt-[-50px] px-6 md:px-20"
+            className="bg-white mt-0 mb-[50px] px-12"
             initial="hidden"
             animate="visible"
             variants={containerVariants}
@@ -26,7 +25,7 @@ const About2 = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.3 }}
                 >
-                    <img src="/ecom.png" alt="Ecommerce Services" className="rounded-lg shadow-lg w-full object-cover" />
+                    <img src="/ecom.jpg" alt="Ecommerce Services" className="rounded-lg shadow-lg w-full object-cover" />
                 </motion.div>
 
                 {/* Left - Text Content */}
@@ -47,7 +46,7 @@ const About2 = () => {
                         Our Story
                     </h3>
                     <p className="mt-4 text-gray-700 leading-relaxed">
-                        Founded on the principles of innovation, customer-centricity, and collaboration, Floship Ecom Services has rapidly evolved into a leading ecommerce ecosystem. Our journey began with a vision to bridge the gap between businesses and their customers, and we've since expanded our offerings to cater to the evolving needs of the market.
+                        Founded on the principles of innovation, customer-centricity, and collaboration, Floship Ecom Services has rapidly evolved into a leading ecommerce ecosystem.
                     </p>
 
                     {/* CTA Button */}
