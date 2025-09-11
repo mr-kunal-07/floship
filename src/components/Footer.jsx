@@ -51,7 +51,7 @@ const Footer = () => {
                         Opp Movie Time Theater, Malad West, Mumbai - 400064.
                     </p>
                     <p className="mt-2 text-gray-300 flex items-center">
-                        <FaPhoneAlt className="text-orange-400 mr-2" /> +91 93721 76665
+                        <FaPhoneAlt className="text-orange-400 mr-2" /> +91 9326539701 / +91 8850276788 
                     </p>
                     <p className="mt-2 text-gray-300 flex items-center">
                         <FaEnvelope className="text-orange-400 mr-2" /> info@floshipservices.com

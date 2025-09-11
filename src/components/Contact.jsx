@@ -64,9 +64,20 @@ const Contact = () => {
             {/* Contact Information */}
             <div className="grid md:grid-cols-3 gap-6 mb-10">
                 <ContactCard icon="📍" title="Location" text="Mumbai, India" />
-                <ContactCard icon="✉️" title="Email" text="info@floshipservices.com" link="mailto:info@floshipservices.com" />
-                <ContactCard icon="📞" title="Call" text="+91 93721 76665" link="tel:+919372176665" />
+                <ContactCard
+                    icon="✉️"
+                    title="Email"
+                    text="info@floshipservices.com"
+                    link="mailto:info@floshipservices.com"
+                />
+                <ContactCard
+                    icon="📞"
+                    title="Call"
+                    text="+91 9326539701 / +91 8850276788"
+                    link="tel:+919326539701"
+                />
             </div>
+
 
             {/* Contact Form */}
             <motion.div className="bg-orange-50 p-8 rounded-md shadow-md" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
