@@ -1,121 +1,310 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import emailjs from "emailjs-com";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+
+
+// --- CUSTOM SVG ICONS ---
+const IconWrapper = ({ children, className = "" }) => (
+  <svg 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth="2" 
+    strokeLinecap="round" 
+    strokeLinejoin="round" 
+    className={`w-5 h-5 ${className}`}
+  >
+    {children}
+  </svg>
+);
+
+const MapPin = () => (
+  <IconWrapper>
+    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <circle cx="12" cy="10" r="3" />
+  </IconWrapper>
+);
+
+const Mail = () => (
+  <IconWrapper>
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+    <polyline points="22,6 12,13 2,6" />
+  </IconWrapper>
+);
+
+const Phone = () => (
+  <IconWrapper>
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.28-2.28a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </IconWrapper>
+);
+
+const ArrowRight = () => (
+  <IconWrapper className="w-4 h-4">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </IconWrapper>
+);
+
+const Spinner = () => (
+  <svg className="animate-spin h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+);
+
+const MAP_EMBED_URL = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3768.147452673009!2d72.833733!3d19.188761!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b6eefb76fa01%3A0x9c4c6bc85e0a9609!2sOld%20Sonal%20Industrial%20Estate!5e0!3m2!1sen!2sin!4v1742236691391!5m2!1sen!2sin";
+
+const CONTACT_METHODS = [
+  {
+    id: "location",
+    Icon: MapPin,
+    title: "Headquarters",
+    text: "Malad West, Mumbai, 400064",
+    href: "https://maps.google.com/?q=Old+Sonal+Industrial+Estate+Malad+West+Mumbai",
+    color: "bg-blue-50 text-blue-600",
+  },
+  {
+    id: "email",
+    Icon: Mail,
+    title: "Email Us",
+    text: "info@floshipservices.com",
+    href: "mailto:info@floshipservices.com",
+    color: "bg-emerald-50 text-emerald-600",
+  },
+  {
+    id: "phone",
+    Icon: Phone,
+    title: "Call Anytime",
+    text: "+91 93265 39701",
+    href: "tel:+919326539701",
+    color: "bg-orange-50 text-orange-600",
+  },
+];
+
+const FORM_FIELDS = [
+  { id: "name", type: "text", label: "Full Name", placeholder: "Alex Johnson", colSpan: 1 },
+  { id: "email", type: "email", label: "Work Email", placeholder: "alex@company.com", colSpan: 1 },
+  { id: "subject", type: "text", label: "Subject", placeholder: "Logistics Inquiry", colSpan: 2 },
+];
+
+const INITIAL_FORM = { name: "", email: "", subject: "", message: "" };
 
 const Contact = () => {
-    const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-    const [error, setError] = useState("");
-    const [success, setSuccess] = useState("");
+  const [formData, setFormData] = useState(INITIAL_FORM);
+  const [status, setStatus] = useState({ type: null, message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Handle Input Change
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  useEffect(() => {
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700;800&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    return () => document.head.removeChild(link);
+  }, []);
 
-    // Handle Form Submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const { name, email, subject, message } = formData;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
-        // Form Validation
-        if (!name || !email || !subject || !message) {
-            setError("All fields are required.");
-            return;
-        }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus({ type: "error", message: "Required fields are missing." });
+      return;
+    }
+    setIsSubmitting(true);
+    setStatus({ type: null, message: "" });
 
-        // Email Validation
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            setError("Please enter a valid email address.");
-            return;
-        }
+    try {
+      const response = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          service_id: "service_joj056o",
+          template_id: "template_vaiivrl",
+          user_id: "CIAJEr84e1aYEdQ3o",
+          template_params: formData
+        })
+      });
+      if (response.ok) {
+        setStatus({ type: "success", message: "Message sent! We'll be in touch soon." });
+        setFormData(INITIAL_FORM);
+      } else {
+        throw new Error();
+      }
+    } catch {
+      setStatus({ type: "error", message: "Something went wrong. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
-        setError(""); // Clear previous errors
-
-        // Send email using EmailJS
-        emailjs.send("service_joj056o", "template_vaiivrl", formData, "CIAJEr84e1aYEdQ3o")
-            .then((response) => {
-                console.log("Email Sent Successfully!", response);
-                setSuccess("Your message has been sent successfully! 🚀");
-                setFormData({ name: "", email: "", subject: "", message: "" });
-
-                // Hide success message after 3 seconds
-                setTimeout(() => setSuccess(""), 3000);
-            })
-            .catch((error) => {
-                console.error("EmailJS Error:", error);
-                setError("Failed to send message. Please check your configuration.");
-            });
-    };
-
-    return (
-        <motion.section className="bg-white py-12 px-4 md:px-16" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            {/* Google Maps Section */}
-            <div className="w-full mb-8">
-                <iframe
-                    title="Google Map"
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3768.147452673009!2d72.833733!3d19.188761!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b6eefb76fa01%3A0x9c4c6bc85e0a9609!2sOld%20Sonal%20Industrial%20Estate!5e0!3m2!1sen!2sin!4v1742236691391!5m2!1sen!2sin"
-                    className="w-full h-80 rounded-md shadow-md"
-                    allowFullScreen
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
-            </div>
-
-            {/* Contact Information */}
-            <div className="grid md:grid-cols-3 gap-6 mb-10">
-                <ContactCard icon="📍" title="Location" text="Mumbai, India" />
-                <ContactCard
-                    icon="✉️"
-                    title="Email"
-                    text="info@floshipservices.com"
-                    link="mailto:info@floshipservices.com"
-                />
-                <ContactCard
-                    icon="📞"
-                    title="Call"
-                    text="+91 9326539701 / +91 8850276788"
-                    link="tel:+919326539701"
-                />
-            </div>
-
-
-            {/* Contact Form */}
-            <motion.div className="bg-orange-50 p-8 rounded-md shadow-md" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-                <h2 className="text-2xl font-bold mb-6 text-center text-orange-700">Feel Free to Write Us</h2>
-
-                {/* Error Message */}
-                {error && <p className="text-red-600 text-center mb-4">❌ {error}</p>}
-                {/* Success Message */}
-                {success && <p className="text-green-600 text-center mb-4">✅ {success}</p>}
-
-                <form className="space-y-4" onSubmit={handleSubmit}>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <InputField type="text" name="name" placeholder="Your Name" value={formData.name} onChange={handleChange} />
-                        <InputField type="email" name="email" placeholder="Your Email" value={formData.email} onChange={handleChange} />
-                    </div>
-                    <InputField type="text" name="subject" placeholder="Subject" value={formData.subject} onChange={handleChange} />
-                    <textarea name="message" placeholder="Message" rows="4" value={formData.message} onChange={handleChange} className="p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"></textarea>
-                    <motion.button className="bg-orange-600 text-white px-6 py-3 rounded-md w-full md:w-auto hover:bg-orange-700 transition" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>Send Message</motion.button>
-                </form>
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
+      {/* Dynamic Header */}
+      <header className="relative py-4 overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-orange-50/50 to-transparent -z-0" />
+        <div className="max-w-7xl mx-auto px-8 relative z-10">
+          <div className="max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-orange-100 rounded-md"
+            >
+              <span className="w-2 h-2 rounded-full bg-orange-600 animate-pulse"></span>
+              <span className="text-orange-700 font-bold text-xs uppercase tracking-widest">Global Support Center</span>
             </motion.div>
-        </motion.section>
-    );
-};
-
-// 🔹 Reusable Contact Card Component
-const ContactCard = ({ icon, title, text, link }) => (
-    <div className="flex items-center space-x-4 bg-orange-100 p-6 rounded-md shadow-md">
-        <div className="text-orange-600 text-3xl">{icon}</div>
-        <div>
-            <h3 className="text-lg font-bold text-orange-700">{title}:</h3>
-            {link ? <a href={link} className="text-gray-700 hover:text-orange-600 transition">{text}</a> : <p className="text-gray-700">{text}</p>}
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              How can we <br />
+              <span className="text-orange-600">help you today?</span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-slate-500 max-w-2xl leading-relaxed"
+            >
+              Whether you're shipping across the city or across the globe, our team of dedicated logistics professionals is here to streamline your journey.
+            </motion.p>
+          </div>
         </div>
-    </div>
-);
+      </header>
 
-// 🔹 Reusable Input Field Component
-const InputField = ({ type, name, placeholder, value, onChange }) => (
-    <input type={type} name={name} placeholder={placeholder} value={value} onChange={onChange} className="p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400" />
-);
+      <main className="max-w-7xl mx-auto px-8 my-10">
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Info Side */}
+          <div className="lg:col-span-4 space-y-6">
+            {CONTACT_METHODS.map((method, idx) => (
+              <motion.a
+                key={method.id}
+                href={method.href}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className="block group p-6 bg-white border border-slate-200 rounded-md shadow-sm hover:shadow-md hover:border-orange-200 transition-all"
+              >
+                <div className="flex items-center gap-5">
+                  <div className={`p-4 rounded-md ${method.color} transition-transform group-hover:scale-110`}>
+                    <method.Icon />
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{method.title}</p>
+                    <p className="text-md font-semibold text-slate-900 group-hover:text-orange-600 transition-colors">{method.text}</p>
+                  </div>
+                </div>
+              </motion.a>
+            ))}
+
+            {/* Map Card */}
+            <div className="relative rounded-md overflow-hidden border border-slate-200 shadow-sm h-80 group">
+              <iframe
+                title="Location"
+                src={MAP_EMBED_URL}
+                className="w-full h-full border-none filter contrast-125"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm p-4 rounded-md border border-white/50 shadow-xl">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="text-[10px] font-bold text-orange-600 uppercase tracking-widest">Main Logistics Hub</p>
+                    <p className="text-sm font-bold text-slate-900">Malad, Mumbai, India</p>
+                  </div>
+                  <div className="bg-orange-600 p-2 rounded-md text-white">
+                    <ArrowRight />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Form Side */}
+          <div className="lg:col-span-8">
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-white border border-slate-200 p-10 md:p-14 rounded-md shadow-xl"
+            >
+              <div className="mb-12">
+                <h2 className="text-3xl font-bold text-slate-900 mb-2">Send an Inquiry</h2>
+                <p className="text-slate-500">Fill out the form and a specialist will respond within 24 hours.</p>
+              </div>
+
+              <AnimatePresence>
+                {status.message && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className={`mb-10 p-4 rounded-md text-sm font-bold flex items-center gap-3 ${
+                      status.type === "error" 
+                        ? "bg-red-50 text-red-700 border border-red-100" 
+                        : "bg-emerald-50 text-emerald-700 border border-emerald-100"
+                    }`}
+                  >
+                    <div className={`w-2 h-2 rounded-full ${status.type === "error" ? "bg-red-600" : "bg-emerald-600"}`} />
+                    {status.message}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  {FORM_FIELDS.map((field) => (
+                    <div key={field.id} className={field.colSpan === 2 ? "md:col-span-2" : ""}>
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
+                        {field.label}
+                      </label>
+                      <input
+                        type={field.type}
+                        name={field.id}
+                        value={formData[field.id]}
+                        onChange={handleChange}
+                        placeholder={field.placeholder}
+                        disabled={isSubmitting}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-4 text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none text-sm font-medium"
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                <div className="space-y-3">
+                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Requirement Details</label>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
+                    disabled={isSubmitting}
+                    placeholder="Tell us about your shipment volume, origin, and destination..."
+                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-4 text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none resize-none text-sm font-medium leading-relaxed"
+                  />
+                </div>
+
+                <div className="pt-4">
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="w-full md:w-auto bg-slate-900 text-white px-10 py-5 rounded-md font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-4 hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-200 transition-all active:scale-[0.98] disabled:opacity-50"
+                  >
+                    {isSubmitting ? <Spinner /> : "Confirm & Send"}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  );
+};
 
 export default Contact;
