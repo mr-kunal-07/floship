@@ -5,6 +5,7 @@ const COMPANY = {
   name: "Floship Ecom Services",
   description: "At Floship Services, we are committed to simplifying logistics and providing innovative solutions for businesses. We specialise in seamless courier logistics, solar energy solutions, utility bill payments, and banking services.",
   copyrightStart: 2024,
+  phone: "+91 93265 39701 / +91 88502 76788",
 };
 
 const NAV_LINKS = [
@@ -106,7 +107,7 @@ const Footer = () => {
             </p>
             <p className="flex items-center gap-3">
               <span className="text-orange-500 shrink-0"><PhoneIcon /></span>
-              +91 93265 39701
+              {COMPANY.phone}
             </p>
             <p className="flex items-center gap-3">
               <span className="text-orange-500 shrink-0"><MailIcon /></span>
