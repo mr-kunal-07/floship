@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-
-
 // --- CUSTOM SVG ICONS ---
 const IconWrapper = ({ children, className = "" }) => (
   <svg 
@@ -75,7 +73,7 @@ const CONTACT_METHODS = [
     id: "phone",
     Icon: Phone,
     title: "Call Anytime",
-    text: "+91 93265 39701",
+    text: "+91 93265 39701 / +91 88502 76788",
     href: "tel:+919326539701",
     color: "bg-orange-50 text-orange-600",
   },
@@ -142,33 +140,35 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900" style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>
-      {/* Dynamic Header */}
-      <header className="relative py-4 overflow-hidden">
-        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-orange-50/50 to-transparent -z-0" />
-        <div className="max-w-7xl mx-auto px-8 relative z-10">
+      {/* Header Section - Fluid Typography and Padding */}
+      <header className="relative pt-12 pb-8 md:pt-20 md:pb-12 overflow-hidden">
+        <div className="absolute top-0 right-0 w-full md:w-1/2 h-full bg-gradient-to-l from-orange-50/50 to-transparent -z-0" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-4xl">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-3 mb-8 px-4 py-2 bg-orange-100 rounded-md"
+              className="inline-flex items-center gap-2 mb-6 px-3 py-1.5 bg-orange-100 rounded-full"
             >
               <span className="w-2 h-2 rounded-full bg-orange-600 animate-pulse"></span>
-              <span className="text-orange-700 font-bold text-xs uppercase tracking-widest">Global Support Center</span>
+              <span className="text-orange-700 font-bold text-[10px] md:text-xs uppercase tracking-widest">Global Support Center</span>
             </motion.div>
+            
             <motion.h1 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8"
+              className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-6 leading-[1.1]"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               How can we <br />
               <span className="text-orange-600">help you today?</span>
             </motion.h1>
+            
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="text-xl text-slate-500 max-w-2xl leading-relaxed"
+              className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed"
             >
               Whether you're shipping across the city or across the globe, our team of dedicated logistics professionals is here to streamline your journey.
             </motion.p>
@@ -176,48 +176,53 @@ const Contact = () => {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-8 my-10">
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
+      {/* Main Content - Grid adapts from 1 to 12 columns */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           
-          {/* Info Side */}
-          <div className="lg:col-span-4 space-y-6">
-            {CONTACT_METHODS.map((method, idx) => (
-              <motion.a
-                key={method.id}
-                href={method.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className="block group p-6 bg-white border border-slate-200 rounded-md shadow-sm hover:shadow-md hover:border-orange-200 transition-all"
-              >
-                <div className="flex items-center gap-5">
-                  <div className={`p-4 rounded-md ${method.color} transition-transform group-hover:scale-110`}>
-                    <method.Icon />
+          {/* Info Side - Stacks on mobile, stays left on desktop */}
+          <div className="lg:col-span-4 space-y-4 md:space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 md:gap-6">
+              {CONTACT_METHODS.map((method, idx) => (
+                <motion.a
+                  key={method.id}
+                  href={method.href}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="block group p-5 md:p-6 bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md hover:border-orange-200 transition-all"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`p-3 md:p-4 rounded-lg ${method.color} transition-transform group-hover:scale-110`}>
+                      <method.Icon />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{method.title}</p>
+                      <p className="text-sm md:text-md font-semibold text-slate-900 group-hover:text-orange-600 transition-colors truncate">
+                        {method.text}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">{method.title}</p>
-                    <p className="text-md font-semibold text-slate-900 group-hover:text-orange-600 transition-colors">{method.text}</p>
-                  </div>
-                </div>
-              </motion.a>
-            ))}
+                </motion.a>
+              ))}
+            </div>
 
-            {/* Map Card */}
-            <div className="relative rounded-md overflow-hidden border border-slate-200 shadow-sm h-80 group">
+            {/* Map Card - Responsive height */}
+            <div className="relative rounded-xl overflow-hidden border border-slate-200 shadow-sm h-64 sm:h-80 lg:h-96 group">
               <iframe
                 title="Location"
                 src={MAP_EMBED_URL}
-                className="w-full h-full border-none filter contrast-125"
+                className="w-full h-full border-none filter grayscale-[20%] contrast-[110%]"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent pointer-events-none" />
-              <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-sm p-4 rounded-md border border-white/50 shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent pointer-events-none" />
+              <div className="absolute bottom-3 left-3 right-3 md:bottom-4 md:left-4 md:right-4 bg-white/95 backdrop-blur-sm p-3 md:p-4 rounded-lg border border-white/50 shadow-xl">
                 <div className="flex justify-between items-center">
                   <div>
-                    <p className="text-[10px] font-bold text-orange-600 uppercase tracking-widest">Main Logistics Hub</p>
-                    <p className="text-sm font-bold text-slate-900">Malad, Mumbai, India</p>
+                    <p className="text-[9px] md:text-[10px] font-bold text-orange-600 uppercase tracking-widest">Main Logistics Hub</p>
+                    <p className="text-xs md:text-sm font-bold text-slate-900">Malad, Mumbai, India</p>
                   </div>
-                  <div className="bg-orange-600 p-2 rounded-md text-white">
+                  <div className="bg-orange-600 p-1.5 md:p-2 rounded-lg text-white">
                     <ArrowRight />
                   </div>
                 </div>
@@ -225,16 +230,16 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* Form Side */}
+          {/* Form Side - Centered/Wide padding on mobile */}
           <div className="lg:col-span-8">
             <motion.div 
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white border border-slate-200 p-10 md:p-14 rounded-md shadow-xl"
+              className="bg-white border border-slate-200 p-6 sm:p-10 lg:p-14 rounded-2xl shadow-xl shadow-slate-200/50"
             >
-              <div className="mb-12">
-                <h2 className="text-3xl font-bold text-slate-900 mb-2">Send an Inquiry</h2>
-                <p className="text-slate-500">Fill out the form and a specialist will respond within 24 hours.</p>
+              <div className="mb-8 md:mb-12">
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Send an Inquiry</h2>
+                <p className="text-sm md:text-base text-slate-500">Fill out the form and a specialist will respond within 24 hours.</p>
               </div>
 
               <AnimatePresence>
@@ -243,23 +248,23 @@ const Contact = () => {
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
-                    className={`mb-10 p-4 rounded-md text-sm font-bold flex items-center gap-3 ${
+                    className={`mb-8 p-4 rounded-lg text-sm font-bold flex items-center gap-3 ${
                       status.type === "error" 
                         ? "bg-red-50 text-red-700 border border-red-100" 
                         : "bg-emerald-50 text-emerald-700 border border-emerald-100"
                     }`}
                   >
-                    <div className={`w-2 h-2 rounded-full ${status.type === "error" ? "bg-red-600" : "bg-emerald-600"}`} />
+                    <div className={`shrink-0 w-2 h-2 rounded-full ${status.type === "error" ? "bg-red-600" : "bg-emerald-600"}`} />
                     {status.message}
                   </motion.div>
                 )}
               </AnimatePresence>
 
-              <form onSubmit={handleSubmit} className="space-y-8">
-                <div className="grid md:grid-cols-2 gap-8">
+              <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                   {FORM_FIELDS.map((field) => (
                     <div key={field.id} className={field.colSpan === 2 ? "md:col-span-2" : ""}>
-                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">
+                      <label className="block text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest mb-2.5">
                         {field.label}
                       </label>
                       <input
@@ -269,30 +274,30 @@ const Contact = () => {
                         onChange={handleChange}
                         placeholder={field.placeholder}
                         disabled={isSubmitting}
-                        className="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-4 text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none text-sm font-medium"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3.5 md:py-4 text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none text-sm font-medium"
                       />
                     </div>
                   ))}
                 </div>
 
-                <div className="space-y-3">
-                  <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Requirement Details</label>
+                <div className="space-y-2.5">
+                  <label className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-widest">Requirement Details</label>
                   <textarea
                     name="message"
-                    rows={5}
+                    rows={4}
                     value={formData.message}
                     onChange={handleChange}
                     disabled={isSubmitting}
                     placeholder="Tell us about your shipment volume, origin, and destination..."
-                    className="w-full bg-slate-50 border border-slate-200 rounded-md px-4 py-4 text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none resize-none text-sm font-medium leading-relaxed"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3.5 md:py-4 text-slate-900 placeholder:text-slate-300 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/5 transition-all outline-none resize-none text-sm font-medium leading-relaxed"
                   />
                 </div>
 
-                <div className="pt-4">
+                <div className="pt-2 md:pt-4">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full md:w-auto bg-slate-900 text-white px-10 py-5 rounded-md font-bold text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-4 hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-200 transition-all active:scale-[0.98] disabled:opacity-50"
+                    className="w-full md:w-auto bg-slate-900 text-white px-10 py-4 md:py-5 rounded-lg font-bold text-[10px] md:text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-3 hover:bg-orange-600 hover:shadow-lg hover:shadow-orange-200 transition-all active:scale-[0.98] disabled:opacity-50"
                   >
                     {isSubmitting ? <Spinner /> : "Confirm & Send"}
                   </button>
@@ -302,7 +307,6 @@ const Contact = () => {
           </div>
         </div>
       </main>
-
     </div>
   );
 };
