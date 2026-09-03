@@ -25,17 +25,12 @@ const Navbar = () => {
 
     const services = [
         { name: "Solar Energy", path: "/services/solar-energy" },
-        { name: "Courier Booking", path: "/services/courier-booking" },
         { name: "Courier Logistics", path: "/services/courier-logistics" },
-        { name: "B2B Solutions", path: "/services/b2b" },
-        { name: "Utility Payments", path: "/services/bill-payments" },
-        { name: "Banking Services", path: "/services/banking" },
     ];
 
     const navLinks = [
         { name: "Home", path: "/" },
         { name: "About Us", path: "/about" },
-        { name: "Franchise", path: "/franchise" },
         { name: "Contact", path: "/contact" },
     ];
 

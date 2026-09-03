@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import About2 from "./About2";
 import Services2 from "./Services2";
-import Partners from "./Partners";
 import Hero from "./Hero";
 
 
@@ -15,7 +14,6 @@ const Home = () => {
 
             <Hero />
             <About2 />
-            <Partners />
             <Services2 />
         </>
     );

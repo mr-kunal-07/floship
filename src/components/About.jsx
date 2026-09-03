@@ -48,7 +48,7 @@ const About = () => {
                 {/* Right - Image */}
                 <div className="w-full md:w-1/2">
                     <motion.img
-                        src="/ecom.png"
+                        src="/ecom.jpg"
                         alt="Ecommerce Services"
                         className="rounded-lg shadow-lg w-full"
                         loading="lazy"

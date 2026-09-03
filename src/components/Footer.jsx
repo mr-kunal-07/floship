@@ -3,7 +3,7 @@ import React from "react";
 // --- FOOTER CONSTANTS ---
 const COMPANY = {
   name: "Floship Ecom Services",
-  description: "At Floship Services, we are committed to simplifying logistics and providing innovative solutions for businesses. We specialise in seamless courier logistics, solar energy solutions, utility bill payments, and banking services.",
+  description: "At Floship Services, we are committed to simplifying logistics and providing innovative solar energy and courier logistics solutions for businesses.",
   copyrightStart: 2024,
   phone: "+91 93265 39701 / +91 88502 76788",
 };
@@ -16,11 +16,8 @@ const NAV_LINKS = [
 ];
 
 const SERVICE_LINKS = [
-  { label: "B2B Logistics", to: "#" },
-  { label: "Courier Booking", to: "#" },
-  { label: "Solar Energy", to: "#" },
-  { label: "Utility & Bill Payments", to: "#" },
-  { label: "Banking Services", to: "#" },
+  { label: "Solar Energy", to: "/services/solar-energy" },
+  { label: "Courier Logistics", to: "/services/courier-logistics" },
 ];
 
 const SOCIAL_LINKS = [
@@ -62,7 +59,7 @@ const Footer = () => {
         {/* Company Brand */}
         <div className="space-y-6">
           <h2 className="text-2xl font-bold tracking-tight">
-            {COMPANY.name.toUpperCase().split(' ')[0]} <span className="text-orange-500">{COMPANY.name.toUpperCase().split(' ')[1]}</span>
+            FLOSHIP <span className="text-orange-500">ECOM SERVICES</span>
           </h2>
           <p className="text-slate-400 text-sm leading-relaxed max-w-sm">
             {COMPANY.description}

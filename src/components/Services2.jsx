@@ -19,11 +19,8 @@ const Services2 = () => {
     ];
 
     const services = [
-        { title: "Banking Services", description: "Our partnership with leading banks enables us to offer a suite of financial services, including payments, deposits, and loans.", image: "/Services/banking.png" },
-        { title: "B2B Ecommerce", description: "Our B2B ecommerce platform connects businesses with suppliers, manufacturers, and distributors, streamlining procurement.", image: "/Services/b2b.png" },
-        { title: "Courier and Logistics", description: "Our logistics expertise ensures timely and efficient delivery of packages, parcels, and shipments across the country.", image: "/Services/logistics.jpg" },
         { title: "Solar Energy", description: "Our renewable energy solutions help businesses and individuals harness the power of solar energy, reducing their carbon footprint.", image: "/Services/solar.png" },
-        { title: "Utility and Bill Payments", description: "We provide a fast, secure, & user-friendly platform to ensure that all your utility bills are paid on time, hassle-free.", image: "/Services/utility.png" },
+        { title: "Courier Logistics", description: "Our logistics expertise ensures timely and efficient delivery of packages, parcels, and shipments across the country.", image: "/Services/logistics.jpg" },
     ];
 
     return (

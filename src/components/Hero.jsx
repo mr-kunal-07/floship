@@ -6,7 +6,6 @@ const images = [
     "/Hero/del.jpg",
     "/Hero/Solar1.jpg",
     "/Hero/del3.jpg",
-    "/Hero/b2b.jpg",
 ];
 
 const Hero = () => {

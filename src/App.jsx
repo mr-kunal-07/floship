@@ -9,16 +9,11 @@ import Services from "./components/Services";
 import Join from "./components/Join";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
-import B2b from "./components/Services/B2b";
 import CourierLogistics from "./components/Services/CourierLogistics";
 import SolarSystem from "./components/Services/SolarSystem";
-import UtilityBillPayments from "./components/Services/UtilityBillPayments";
-import BankingServices from "./components/Services/BankingServices";
-import CourierBooking from "./components/Services/CourierBooking";
 import About2 from "./components/About2";
 import WhatsAppButton from "./components/WhatsAppButton";
 import CursorDot from "./components/CursorDot";  
-import Franchise from "./components/Franchise";
 
 const App = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -32,13 +27,8 @@ const App = () => {
     { path: "/join", component: <Join /> },
     { path: "/contact", component: <Contact /> },
     { path: "/login", component: <Login /> },
-    { path: "/services/b2b", component: <B2b /> },
     { path: "/services/courier-logistics", component: <CourierLogistics /> },
     { path: "/services/solar-energy", component: <SolarSystem /> },
-    { path: "/services/bill-payments", component: <UtilityBillPayments /> },
-    { path: "/services/banking", component: <BankingServices /> },
-    { path: "/services/courier-booking", component: <CourierBooking /> },
-    { path: "/franchise", component: <Franchise /> },
   ];
 
   return (
